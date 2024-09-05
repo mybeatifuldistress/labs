@@ -1,51 +1,65 @@
 ﻿#include <iostream>
-#include <ctime>
+#include <string>
+#include <locale>
+
+struct Student {
+    std::string famil;   
+    std::string name;    
+    std::string facult;  
+    int Nomzach;         
+};
+
+void findStudent(Student *students, int count, const std::string& famil, const std::string& name) {
+    bool found = false;
+
+    for (int i = 0; i < count; ++i) {
+        if (students[i].famil == famil && students[i].name == name) {
+            std::cout << "Студент найден:" << std::endl;
+            std::cout << "Фамилия: " << students[i].famil << std::endl;
+            std::cout << "Имя: " << students[i].name << std::endl;
+            std::cout << "Факультет: " << students[i].facult << std::endl;
+            std::cout << "Номер зачётной книжки: " << students[i].Nomzach << std::endl;
+            found = true;
+        }
+    }
+
+    if (!found) {
+        std::cout << "Студент с указанными параметрами не найден." << std::endl;
+    }
+}
 
 int main() {
+    
+    setlocale(LC_ALL, "RUS");
 
-	srand(time(NULL));
+    int numStudents = 0;
+    std::cout << "Введите нужное количество студентов: " << std::endl;
+    std::cin >> numStudents;
 
-	int array[100][100];
-	int rows;
-	int cols;
+    Student *students = new Student[numStudents];
 
-	std::cout << "Enter the number of rows: " << std::endl;
-	std::cin >> rows;
-	
-	std::cout << "Enter the number of cols: " << std::endl;
-	std::cin >> cols;
+    for (int i = 0; i < numStudents; ++i) {
+        std::cout << "Введите данные для студента " << (i + 1) << ":" << std::endl;
+        std::cout << "Фамилия: ";
+        std::cin >> students[i].famil;
+        std::cout << "Имя: ";
+        std::cin >> students[i].name;
+        std::cout << "Факультет: ";
+        std::cin >> students[i].facult;
+        std::cout << "Номер зачётной книжки: ";
+        std::cin >> students[i].Nomzach;
+        std::cout << std::endl;
+    }
 
-	for (int i = 0; i < rows; ++i) {
-		for (int j = 0; j < cols; ++j) {
-			array[i][j] = 1 + rand() % 9;
-		}
-	}
+    std::string searchFamil, searchName;
 
-	std::cout << "Array:" << std::endl;
-	for (int i = 0; i < rows; ++i) {
-		for (int j = 0; j < cols; ++j) {
-			std::cout << array[i][j] << ' ';
-		}
-		std::cout << std::endl;
-	}
-	
-	for (int i = 0; i < rows; ++i) {
-		int sum_row = 0;
-		for (int j = 0; j < cols; ++j) {
-			sum_row += array[i][j];
-		}
-		std::cout << "Amount in row " << i + 1 << ": " << sum_row << std::endl;
-	}
+    std::cout << "Введите фамилию для поиска: ";
+    std::cin >> searchFamil;
 
-	std::cout << std::endl;
+    std::cout << "Введите имя для поиска: ";
+    std::cin >> searchName;
 
-	for (int j = 0; j < cols; ++j) {
-		int sum_col = 0;
-		for (int i = 0; i < rows; ++i) {
-			sum_col += array[i][j];
-		}
-		std::cout << "Amount in col " << j + 1 << ": " << sum_col << std::endl;
-	}
+    findStudent(students, numStudents, searchFamil, searchName);
 
-	return 0;
+    return 0;
 }
