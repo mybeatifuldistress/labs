@@ -3,13 +3,15 @@
 
 int main() {
 
+	srand(time(NULL));
+
 	int min = INT_MAX;
 	int max = INT_MIN;
 
 	int array[10] = {};
 
 	for (int i = 0; i < 10; ++i) {
-		array[i] = (i * 2) % 3;
+		array[i] = 1 + rand() % 100;
 	}
 
 	for (int i = 0; i < 10; ++i) {
