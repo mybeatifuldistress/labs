@@ -3,8 +3,6 @@
 
 int main() {
 
-	srand(time(NULL));
-
 	int min = INT_MAX;
 	int max = INT_MIN;
 
