@@ -1,65 +1,40 @@
 ﻿#include <iostream>
-#include <string>
-#include <locale>
+#include <limits>
 
-struct Student {
-    std::string famil;   
-    std::string name;    
-    std::string facult;  
-    int Nomzach;         
-};
+int main() {
+    srand(time(NULL));
 
-void findStudent(Student *students, int count, const std::string& famil, const std::string& name) {
-    bool found = false;
+    int min = INT_MAX;
+    int max = INT_MIN;
 
-    for (int i = 0; i < count; ++i) {
-        if (students[i].famil == famil && students[i].name == name) {
-            std::cout << "Студент найден:" << std::endl;
-            std::cout << "Фамилия: " << students[i].famil << std::endl;
-            std::cout << "Имя: " << students[i].name << std::endl;
-            std::cout << "Факультет: " << students[i].facult << std::endl;
-            std::cout << "Номер зачётной книжки: " << students[i].Nomzach << std::endl;
-            found = true;
+    int size;
+
+    std::cout << "Enter array size: ";
+    std::cin >> size;
+
+    int* array = new int[size];
+
+    std::cout << "Array values: ";
+    for (int i = 0; i < size; ++i) {
+        array[i] = 1 + rand() % 100;
+        std::cout << array[i] << ' ';
+    }
+    std::cout << std::endl;
+
+    for (int i = 0; i < size; ++i) {
+        if (array[i] < min) {
+            min = array[i];
+        }
+        if (array[i] > max) {
+            max = array[i];
         }
     }
 
-    if (!found) {
-        std::cout << "Студент с указанными параметрами не найден." << std::endl;
-    }
-}
+    std::cout << "Min is " << min << std::endl;
+    std::cout << "Max is " << max << std::endl;
+    std::cout << "Difference between max and min: " << max - min << std::endl;
 
-int main() {
-    
-    setlocale(LC_ALL, "RUS");
-
-    int numStudents = 0;
-    std::cout << "Введите нужное количество студентов: " << std::endl;
-    std::cin >> numStudents;
-
-    Student *students = new Student[numStudents];
-
-    for (int i = 0; i < numStudents; ++i) {
-        std::cout << "Введите данные для студента " << (i + 1) << ":" << std::endl;
-        std::cout << "Фамилия: ";
-        std::cin >> students[i].famil;
-        std::cout << "Имя: ";
-        std::cin >> students[i].name;
-        std::cout << "Факультет: ";
-        std::cin >> students[i].facult;
-        std::cout << "Номер зачётной книжки: ";
-        std::cin >> students[i].Nomzach;
-        std::cout << std::endl;
-    }
-
-    std::string searchFamil, searchName;
-
-    std::cout << "Введите фамилию для поиска: ";
-    std::cin >> searchFamil;
-
-    std::cout << "Введите имя для поиска: ";
-    std::cin >> searchName;
-
-    findStudent(students, numStudents, searchFamil, searchName);
+    delete[] array;
 
     return 0;
 }
